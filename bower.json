@@ -1,0 +1,20 @@
+{
+  "name": "las3009_assignment",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "georgebonanno <george.bonanno@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "grunt": "^1.0.1"
+  }
+}
