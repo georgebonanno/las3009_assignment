@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "bower": "^1.7.9"
+  },
+  "devDependencies": {
+    "grunt-json-server": "^0.1.2"
   }
 }

@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "grunt": "^1.0.1"
+    "grunt": "^1.0.1",
+    "angular": "^1.5.5"
   }
 }

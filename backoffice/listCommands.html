@@ -14,15 +14,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="grid.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../../assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -32,7 +27,9 @@
   </head>
 
   <body>
-    <div class="container">
+  	<script src="../bower_components/angular/angular.min.js"></script>
+  	<script src="../js/commands/commands.js"></script>
+    <div class="container" ng-controller="CommandController as commands">
 
       <div class="page-header">
         <h1>Logo Commands</h1>
@@ -48,27 +45,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>pu</td>
-          <td>pen up</td>
-          <td>
-            <button type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-remove"></span> 
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>pd</td>
-          <td>pen down</td>
-          <td>
-            <button type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-remove"></span> 
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>fd</td>
-          <td>forward a number of steps</td>
+        <tr ng-repeat="command in commands.commands">
+          <td>{{command.name}}</td>
+          <td>{{description}}</td>
           <td>
             <button type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-remove"></span> 
@@ -91,7 +70,7 @@
       <div class="row">
         <div class="col-sm-4">Description</div>
         <div class="col-sm-8">
-            <textarea rows="10" cols="15">
+            <textarea rows="10" cols="15" style="width:100;">
             </textarea>
         </div>
       </div>
