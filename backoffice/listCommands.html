@@ -1,19 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+		 <meta name="description" content="">
+	     <meta name="author" content="">
+		 <link rel="icon" href="../../favicon.ico">
 
-    <title>Logo Command Simluator - back office</title>
+		 <title>Logo Command Simluator - back office</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		 <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -24,61 +23,60 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+    </head>
 
-  <body>
-  	<script src="../bower_components/angular/angular.min.js"></script>
-  	<script src="../js/commands/commands.js"></script>
-    <div class="container" ng-controller="CommandController as commands">
+<body ng-app="CommandModule">
+	<div class="container" ng-controller="CommandController">
 
-      <div class="page-header">
-        <h1>Logo Commands</h1>
-        <p class="lead"></p>
-      </div>
+		<div class="page-header">
+			<h1>Logo Commands</h1>
+			<p class="lead"></p>
+		</div>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>command</th>
-          <th>description</th>
-          <th>remove</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="command in commands.commands">
-          <td>{{command.name}}</td>
-          <td>{{description}}</td>
-          <td>
-            <button type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-remove"></span> 
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-      <div class="btn-group">
-          <a href="#/all" class="btn btn-default">New Command</a>
-      </div>
-    <div>
-    <div>
-      <div class="row">
-        <div class="col-sm-4">Command Name</div>
-        <div class="col-sm-8">
-            <input type="text"/>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">Description</div>
-        <div class="col-sm-8">
-            <textarea rows="10" cols="15" style="width:100;">
-            </textarea>
-        </div>
-      </div>
-      <div class="btn-group">
-          <a href="#/all" class="btn btn-default">Insert</a>
-      </div>
-    </div>
-    </div>
- 
-  </body>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>command</th>
+					<th>description</th>
+					<th>remove</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="command in CommandController.commands">
+					<td>{{command.name}}</td>
+					<td>{{command.description}}</td>
+					<td>
+						<button type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="btn-group">
+			<a href="#/all" class="btn btn-default">New Command</a>
+		</div>
+		<div>
+			<div>
+				<div class="row">
+					<div class="col-sm-4">Command Name</div>
+					<div class="col-sm-8">
+						<input type="text"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">Description</div>
+					<div class="col-sm-8">
+						<textarea rows="10" cols="15" style="width:100;"></textarea>
+					</div>
+				</div>
+				<div class="btn-group">
+					<a href="#/all" class="btn btn-default">Insert</a>
+				</div>
+			</div>
+		</div>
+	<script src="../bower_components/angular/angular.min.js"></script>
+	<script src="../js/commands/commands.js"></script>
+
+	</body>
 </html>
