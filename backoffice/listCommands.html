@@ -26,55 +26,64 @@
     </head>
 
 <body ng-app="CommandModule">
-	<div class="container" ng-controller="CommandController">
+	<div ng-controller="CommandController as cmd">
+		<div class="container">
 
-		<div class="page-header">
-			<h1>Logo Commands</h1>
-			<p class="lead"></p>
-		</div>
+			<div class="page-header">
+				<h1>Logo Commands</h1>
+				<p class="lead"></p>
+			</div>
 
-		<table class="table">
-			<thead>
-				<tr>
-					<th>command</th>
-					<th>description</th>
-					<th>remove</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="command in CommandController.commands">
-					<td>{{command.name}}</td>
-					<td>{{command.description}}</td>
-					<td>
-						<button type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-remove"></span>
-						</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="btn-group">
-			<a href="#/all" class="btn btn-default">New Command</a>
-		</div>
-		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>command</th>
+						<th>description</th>
+						<th>remove</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="command in commands">
+						<td>{{command.commandName + " " + command.id}}</td>
+						<td>{{command.description}}</td>
+						<td>
+							<button type="button" class="btn btn-default" ng-click="removeRow(command)">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+				<div>
+					selected: {{selectedCommand}}
+				</div>
+			</table>
+			<div class="btn-group">
+				<a href="#/all" class="btn btn-default">New Command</a>
+			</div>
 			<div>
-				<div class="row">
-					<div class="col-sm-4">Command Name</div>
-					<div class="col-sm-8">
-						<input type="text"/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-4">Description</div>
-					<div class="col-sm-8">
-						<textarea rows="10" cols="15" style="width:100;"></textarea>
-					</div>
-				</div>
-				<div class="btn-group">
-					<a href="#/all" class="btn btn-default">Insert</a>
+				<div>
+					<form>
+						<div class="row">
+							<div class="col-sm-4">Command Name</div>
+							<div class="col-sm-8">
+								<input type="text" ng-model="input.commandName"/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Description</div>
+							<div class="col-sm-8">
+								<textarea rows="10" cols="15" style="width:100;" 
+										  ng-model="input.description"></textarea>
+							</div>
+						</div>
+						<div class="btn-group">
+							<a href="#/all" class="btn btn-default" ng-click="addCommand()">Insert</a>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
+	</div>
 	<script src="../bower_components/angular/angular.min.js"></script>
 	<script src="../js/commands/commands.js"></script>
 
