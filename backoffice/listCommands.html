@@ -34,51 +34,89 @@
 				<p class="lead"></p>
 			</div>
 
-			<table class="table">
-				<thead>
-					<tr>
-						<th>command</th>
-						<th>description</th>
-						<th>remove</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="command in commands">
-						<td>{{command.commandName + " " + command.id}}</td>
-						<td>{{command.description}}</td>
-						<td>
-							<button type="button" class="btn btn-default" ng-click="removeRow(command)">
-								<span class="glyphicon glyphicon-remove"></span>
-							</button>
-						</td>
-					</tr>
-				</tbody>
-				<div>
-					selected: {{selectedCommand}}
+			<div class="panel panel-default" ng-show="!showNewCommand">
+				<div class="panel-heading">
+		            <h3 class="panel-title">List of Commands</h3>
+	            </div>
+	            <div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>command</th>
+								<th>description</th>
+								<th>remove</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="command in commands">
+								<td>
+									<a href="" ng-click="selectCommand(command)">{{command.id}}</a>
+								</td>
+								<td>{{command.commandDescription}}</td>
+								<td>
+									<button type="button" class="btn btn-default" ng-click="removeRow(command)">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-			</table>
-			<div class="btn-group">
-				<a href="#/all" class="btn btn-default">New Command</a>
 			</div>
-			<div>
-				<div>
+			<div class="btn-group">
+				<a href="#/all" 
+				   ng-show="!showNewCommand"
+				   class="btn btn-primary" 
+				   ng-click="newCommand()">New Command</a>
+				<a href="#/all" 
+				   ng-show="showNewCommand"
+				   class="btn btn-primary" 
+				   ng-click="toCommandList()">To Command List</a>
+			</div>
+			<div class="panel panel-default" ng-show="showNewCommand">
+				<div class="panel-heading">
+		            <h3 class="panel-title">New Command</h3>
+	            </div>
+	            <div class="panel-body">
 					<form>
 						<div class="row">
-							<div class="col-sm-4">Command Name</div>
+							<div class="col-sm-2"></div>
+							<div class="col-sm-2">Command Name</div>
 							<div class="col-sm-8">
-								<input type="text" ng-model="input.commandName"/>
+								<input type="text" style="width:70%" 
+									   ng-readonly="updateable" 
+									   ng-model="input.id"/>
+
+									   {{updateable}}
+							</div>
+						</div>
+						<div>
+							<div class="row">
+								<div class="col-sm-12">
+								</div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-sm-4">Description</div>
+							<div class="col-sm-2"></div>
+							<div class="col-sm-2">Description</div>
 							<div class="col-sm-8">
-								<textarea rows="10" cols="15" style="width:100;" 
-										  ng-model="input.description"></textarea>
+								<textarea rows="10" cols="15" style="width:70%;" 
+										  ng-model="input.commandDescription"></textarea>
 							</div>
 						</div>
-						<div class="btn-group">
-							<a href="#/all" class="btn btn-default" ng-click="addCommand()">Insert</a>
-						</div>
+						<div class="row">
+							<div class="col-sm-2"></div>
+							<div class="col-sm-2">
+								<div class="btn-group" style="width:80%; horizontal-align: centre">
+									<a href="#/all" class="btn btn-primary" 
+										ng-show="updateable" ng-click="addCommand()">Update</a>
+									<a href="#/all" class="btn btn-primary" 
+										ng-show="!updateable" ng-click="addCommand()">Insert</a>
+								</div>
+							</div>
+							<div class="col-sm-8"></div>
+							</div>
+						
 					</form>
 				</div>
 			</div>
