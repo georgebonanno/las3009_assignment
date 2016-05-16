@@ -5,28 +5,10 @@ function onError(errorResponse) {
   alert("failed to recieve response");
 }
 
-var app=angular.module('CommandModule', []);
+var app=angular.module('CommandModule', ['ngRoute']);
 app.controller('CommandController', function ($scope, $http,commandRetrieval) {
 
-   var findCommand = function(commandId,commandArray) {
-      var position=commandArray.findIndex(function(current) {
-        return current.id==commandId;
-      });
-      return position;
-   }
-
-   var loadCommands=function() {
-      var promise=$http.get(root + '/commands');
-      promise.then(function(response) {
-          $scope.commands=response.data;
-        },
-        function(errorResponse) {
-          alert("error occured during retrieval");
-        }
-      )
-   };
-
-   $scope.commands=loadCommands();
+   commandRetrieval.loadCommands($scope);
    $scope.showNewCommand=false;
 
    var clearInput=function() {
@@ -44,7 +26,7 @@ app.controller('CommandController', function ($scope, $http,commandRetrieval) {
    }
 
    $scope.toCommandList=function() {
-     $scope.commands=loadCommands();
+     commandRetrieval.loadCommands($scope);
      $scope.showNewCommand=false;
    }
 
@@ -56,14 +38,48 @@ app.controller('CommandController', function ($scope, $http,commandRetrieval) {
       $scope.showNewCommand=true;
    }
 
-   var saveCommand=function(commandToSave) {
+
+
+  $scope.removeRow=function(commandToRemove) {
+    var commandId=commandToRemove.id;
+    console.log("to remove: command with id "+commandId);
+
+    commandRetrieval.removeCommand($scope.commands,commandId);
+
+  };
+
+   $scope.addCommand=function() {
+      commandRetrieval.saveCommand($scope.input,$scope.updateable,$scope);
+   };
+ });
+
+app.service('commandRetrieval', function($http) {
+   var findCommand = function(commandId,commandArray) {
+      var position=commandArray.findIndex(function(current) {
+        return current.id==commandId;
+      });
+      return position;
+   }
+
+   var loadCommands=function(exports) {
+      var promise=$http.get(root + '/commands');
+      promise.then(function(response) {
+          exports.commands=response.data;
+        },
+        function(errorResponse) {
+          alert("error occured during retrieval");
+        }
+      )
+   };
+
+  var saveCommand=function(commandToSave,updateable,exports) {
       var saveUrl=commandsRestServiceUrl;
       var saveData= {
             "id": commandToSave.id,
             "commandDescription": commandToSave.commandDescription
           };
       var promise;
-      if ($scope.updateable) {
+      if (updateable) {
         console.log("updating command details by raising put request");
         saveUrl+="/"+commandToSave.id;
         promise=$http.put(saveUrl,saveData);
@@ -93,16 +109,16 @@ app.controller('CommandController', function ($scope, $http,commandRetrieval) {
       promise && promise.then(
           function(response) {
             if (response != -1) {
-              if ($scope.updateable) {
-                var commandPos=findCommand(commandToSave.id,$scope.commands);
-                $scope.commands[commandPos]=commandToSave;
+              if (updateable) {
+                var commandPos=findCommand(commandToSave.id,exports.commands);
                 alert('successfully updated');
+                exports.commands[commandPos]=commandToSave;
               } else {
-                $scope.commands.push(commandToSave);
+                exports.commands.push(commandToSave);
                 console.log(response);
                 alert('successfully added');
               }
-              $scope.input={};
+              exports.input={};
             }
           },
           function(errorResponse){
@@ -110,54 +126,39 @@ app.controller('CommandController', function ($scope, $http,commandRetrieval) {
             alert('error while saving');
           }
         );
-   };
+    }
 
-  $scope.removeRow=function(commandToRemove) {
-    var commandId=commandToRemove.id;
-    console.log("to remove: command with id "+commandId);
+    var removeCommand=function(commandList,commandId) {
+      
+      var removeSelectedCommand=function(commandId,commands) {
+        var commandPosition=findCommand(commandId,commandList);
+        console.log("position of command to remove: "+commandPosition);
 
-    var removeSelectedCommand=function() {
-      var commandPosition=findCommand(commandId,$scope.commands);
-      console.log("position of command to remove: "+commandPosition);
+        commands.splice(commandPosition,1); 
 
-      $scope.commands.splice(commandPosition,1);
+        console.log("command with id "+commandId+" removed");
+      };
 
-      console.log("command with id "+commandId+" removed");
-    };
-
-    var deletePromise=$http.delete(root+"/commands/"+commandId);
-    deletePromise.then(
-      function(response) {
-        removeSelectedCommand();
-      },
-      function(errorResponse) {
-        onError(errorResponse);
-      }
-    );
+      var deletePromise=$http.delete(root+"/commands/"+commandId);
+      deletePromise.then(
+        function(response) {
+          removeSelectedCommand(commandId,commandList);
+        },
+        function(errorResponse) {
+          onError(errorResponse);
+        }
+      );
 
 
   };
 
-   $scope.addCommand=function() {
-      saveCommand($scope.input);
-   };
- });
-
-app.service('commandRetrieval', function($http) {
-   this.retrieveCommands= function() {
-        return [
-          {
-            commandName: 'pu',
-            description: 'puts the pen up'
-          },
-          {
-            commandName: 'pd',
-            description: 'puts the pen down'
-          }
-        ];
+    return {
+        saveCommand: saveCommand,
+        findCommand: findCommand,
+        loadCommands: loadCommands,
+        removeCommand: removeCommand
     };
 
-    return this;
   });
 
 

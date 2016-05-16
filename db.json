@@ -2,11 +2,19 @@
   "commands": [
     {
       "id": "pu",
-      "description": "lkjnl lkjnlkjn"
+      "commandDescription": "pen up...."
     },
     {
-      "id": "pd",
-      "description": "forwards a number times"
+      "id": "rt",
+      "commandDescription": "rotate a number of degrees updated 2"
+    },
+    {
+      "id": "repeat",
+      "commandDescription": "repeats for a number of times (qisu..)"
+    },
+    {
+      "id": "test2",
+      "commandDescription": "assad"
     }
   ]
 }
