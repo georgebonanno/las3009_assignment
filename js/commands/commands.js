@@ -15,6 +15,11 @@ app.config(['$routeProvider',
         controller: 'CommandController', 
         controllerAs: 'vm'
       }).
+      when('/edit', {
+        templateUrl: 'backoffice/editCommands.html',
+        controller: 'CommandController', 
+        controllerAs: 'vm'
+      }).
       when('/', {
         templateUrl: 'login/login.html'
       }).

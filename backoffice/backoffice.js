@@ -1,47 +1,72 @@
 var app=angular.module('CommandModule');
 app.controller('CommandController', ['$scope', '$http', 'commandRetrieval', function ($scope, $http,commandRetrieval) {
 
-   commandRetrieval.loadCommands($scope);
-   $scope.showNewCommand=false;
+   commandRetrieval.loadCommands(this);
+   this.showNewCommand=false;
 
    var clearInput=function() {
-     $scope.input={};
-     $scope.input.commandName='';
-     $scope.input.commandDescription=''
+     this.input={};
+     this.input.commandName='';
+     this.input.commandDescription=''
    };
 
    clearInput();
 
-   $scope.newCommand=function() {
-      $scope.updateable=false;
-      $scope.showNewCommand=true;
+   this.newCommand=function() {
+      this.updateable=false;
+      this.showNewCommand=true;
       clearInput();
    }
 
-   $scope.toCommandList=function() {
-     commandRetrieval.loadCommands($scope);
-     $scope.showNewCommand=false;
+   this.toCommandList=function() {
+     commandRetrieval.loadCommands().then(
+        function(data) {
+          this.commands=data;
+        }
+    );
+     this.showNewCommand=false;
    }
 
-   $scope.selectCommand=function(commandToSelect) {
-      $scope.input={};
-      $scope.input.id=commandToSelect.id;
-      $scope.input.commandDescription=commandToSelect.commandDescription;
-      $scope.updateable=true;
-      $scope.showNewCommand=true;
+   this.selectCommand=function(commandToSelect) {
+      this.input={};
+      this.input.id=commandToSelect.id;
+      this.input.commandDescription=commandToSelect.commandDescription;
+      this.updateable=true;
+      this.showNewCommand=true;
    }
 
 
 
-  $scope.removeRow=function(commandToRemove) {
+  this.removeRow=function(commandToRemove) {
     var commandId=commandToRemove.id;
     console.log("to remove: command with id "+commandId);
 
-    commandRetrieval.removeCommand($scope.commands,commandId);
+    commandRetrieval.removeCommand(this.commands,commandId);
 
   };
 
-   $scope.addCommand=function() {
-      commandRetrieval.saveCommand($scope.input,$scope.updateable,$scope);
+   this.addCommand=function() {
+      var promise = commandRetrieval.saveCommand(this.input,this.updateable,this);
+      var that=this;
+      promise && promise.then(
+          function(response) {
+            if (response != -1) {
+              if (that.updateable) {
+                var commandPos=findCommand(commandToSave.id,that.commands);
+                alert('successfully updated');
+                that.commands[commandPos]=commandToSave;
+              } else {
+                that.commands.push(commandToSave);
+                console.log(response);
+                alert('successfully added');
+              }
+              that.input={};
+            }
+          },
+          function(errorResponse){
+            console.log("error: "+errorResponse);
+            alert('error while saving');
+          }
+        );
    };
  }]);

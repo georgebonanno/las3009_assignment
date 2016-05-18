@@ -9,12 +9,13 @@ app.service('commandRetrieval', function($http) {
    var loadCommands=function(exports) {
       var promise=$http.get(root + '/commands');
       promise.then(function(response) {
-          exports.commands=response.data;
+          return response.data;
         },
         function(errorResponse) {
           alert("error occured during retrieval");
         }
-      )
+      );
+      return promise;
    };
 
   var saveCommand=function(commandToSave,updateable,exports) {
@@ -51,26 +52,7 @@ app.service('commandRetrieval', function($http) {
                       }
                   });
       }
-      promise && promise.then(
-          function(response) {
-            if (response != -1) {
-              if (updateable) {
-                var commandPos=findCommand(commandToSave.id,exports.commands);
-                alert('successfully updated');
-                exports.commands[commandPos]=commandToSave;
-              } else {
-                exports.commands.push(commandToSave);
-                console.log(response);
-                alert('successfully added');
-              }
-              exports.input={};
-            }
-          },
-          function(errorResponse){
-            console.log("error: "+errorResponse);
-            alert('error while saving');
-          }
-        );
+      return promise;
     }
 
     var removeCommand=function(commandList,commandId) {
