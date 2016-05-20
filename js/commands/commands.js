@@ -15,9 +15,9 @@ app.config(['$routeProvider',
         controller: 'CommandController', 
         controllerAs: 'vm'
       }).
-      when('/edit', {
+      when('/edit/:param', {
         templateUrl: 'backoffice/editCommands.html',
-        controller: 'CommandController', 
+        controller: 'EditController', 
         controllerAs: 'vm'
       }).
       when('/', {
