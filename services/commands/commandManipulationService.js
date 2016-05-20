@@ -6,15 +6,14 @@ app.service('commandRetrieval', function($http) {
       return position;
    }
 
-   var loadCommands=function(exports) {
+   var retrieveCommand=function(command) {
+      var getCommandUrl=commandsRestServiceUrl+"/"+command;
+      return $http.get(getCommandUrl);
+   };
+
+   var loadCommands=function() {
       var promise=$http.get(root + '/commands');
-      promise.then(function(response) {
-          return response.data;
-        },
-        function(errorResponse) {
-          alert("error occured during retrieval");
-        }
-      );
+
       return promise;
    };
 
@@ -83,7 +82,8 @@ app.service('commandRetrieval', function($http) {
         saveCommand: saveCommand,
         findCommand: findCommand,
         loadCommands: loadCommands,
-        removeCommand: removeCommand
+        removeCommand: removeCommand,
+        retrieveCommand: retrieveCommand
     };
 
   });

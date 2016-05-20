@@ -1,7 +1,15 @@
 var app=angular.module('CommandModule');
 app.controller('CommandController', ['$scope', '$http', 'commandRetrieval', function ($scope, $http,commandRetrieval) {
 
-   commandRetrieval.loadCommands(this);
+   var that=this;
+   commandRetrieval.loadCommands()
+        .then(function(response) {
+           that.commands=response.data;
+        },
+        function(errorResponse) {
+          alert("error occured during retrieval");
+        }
+      );
    this.showNewCommand=false;
 
    var clearInput=function() {
