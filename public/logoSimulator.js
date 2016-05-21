@@ -3,6 +3,16 @@ var logoCtrller=function($scope,commandRetrieval) {
 
 	var logoCtrl=this;
 	logoCtrl.currentCommands="";
+
+	var canvas=document.getElementById('logoCanvas');
+	var ctx=canvas.getContext('2d');
+	var currentPosition={
+		angle: 0,
+		x: 20,
+		y: 20
+	}
+	//ctx.moveTo(currentPosition.x,currentPosition.y);
+
 	commandRetrieval.loadCommands()
 		.then(function(response) {
 			logoCtrl.commands=response.data;
@@ -24,6 +34,15 @@ var logoCtrller=function($scope,commandRetrieval) {
 			logoCtrl.currentCommands+=command.id+"\n";
 		}
 	}
+
+	function drawPosition(x,y) {
+		ctx.fillStyle = "#000000";
+		ctx.arc(x,y,5,0,2*Math.PI,false);
+		ctx.lineWidth=2;
+		ctx.strokeStyle="#003300";
+		ctx.stroke();
+	};
+
 
 	var throwParseError=function(message) {
 		throw "parse error: "+message;
@@ -61,11 +80,13 @@ var logoCtrller=function($scope,commandRetrieval) {
 
 	var draw=function(evaluatedCommands) {
 		console.log("to evaluate");
-		for (var i in evaluatedCommands) {
-			for(var key in evaluatedCommands[i]) {
-				console.log("part "+key+" "+evaluatedCommands[i][key]);
+		for (var cmdIdx in evaluatedCommands) {
+			var currentCommand=evaluatedCommands[cmdIdx];
+			if (currentCommand.fd) {
+				console.log("drawing fd");
 			}
 		}
+		drawPosition(currentPosition.x,currentPosition.y);
 	}
 
 	var notifyOnExecution = function(success,message) {
@@ -79,9 +100,7 @@ var logoCtrller=function($scope,commandRetrieval) {
 
 	logoCtrl.evaluate=function (){
 		try {
-			var canvas=document.getElementById('logoCanvas');
-			var ctx=canvas.getContext('2d');
-			ctx.moveTo(0,0);
+
 			var commands=logoCtrl.currentCommands.split("\n");
 			var evaluatedCommands=[];
 			for(var i=0; i< commands.length; i++) {
