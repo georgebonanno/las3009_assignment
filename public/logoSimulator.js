@@ -1,5 +1,6 @@
 var app=angular.module('CommandModule');
 var logoCtrller=function($scope,commandRetrieval) {
+
 	var logoCtrl=this;
 	logoCtrl.currentCommands="";
 	commandRetrieval.loadCommands()
@@ -22,6 +23,14 @@ var logoCtrller=function($scope,commandRetrieval) {
 		if (command) {
 			logoCtrl.currentCommands+=command.id+"\n";
 		}
+	}
+
+	logoCtrl.evaluate=function (){
+		var canvas=document.getElementById('logoCanvas');
+		var ctx=canvas.getContext('2d');
+		ctx.fillStyle= "#FF0000";
+		ctx.fillRect(0,0,30,30);
+		ctx.stroke();
 	}
 };
 app.controller('LogoController',

@@ -28,7 +28,7 @@
         <div class="col-md-9">
         <div class="jumbotron" style="max-height:20;overflow-y: scroll;">
           </p> 
-          <canvas id="myCanvas" width="200" height="70" style="width:100%"></canvas>
+          <canvas id="logoCanvas" width="200" height="70" style="width:100%"></canvas>
         </div>
       </div>
       </div>
@@ -46,7 +46,8 @@
             </div>
             <div class="col-md-2">
               <div class="btn-group-vertical" style="width:90%">
-                <button type="button" class="btn btn-primary">run</button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="logo.evaluate()">run</button>
                 <button type="button" class="btn btn-primary">clear</button>
               </div>
             </div>
