@@ -25,6 +25,11 @@ app.config(['$routeProvider',
         controller: 'EditController', 
         controllerAs: 'vm'
       }).
+      when('/logo', {
+        templateUrl: 'public/logoSimulator.html',
+        controller: 'LogoController', 
+        controllerAs: 'logo'
+      }).
       when('/', {
         templateUrl: 'login/login.html'
       }).
