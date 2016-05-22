@@ -8,8 +8,8 @@ var logoCtrller=function($scope,commandRetrieval) {
 	var ctx=canvas.getContext('2d');
 	var currentPosition={
 		angle: 0,
-		x: 20,
-		y: 20
+		x: canvas.width/2,
+		y: canvas.height/2 
 	}
 	//ctx.moveTo(currentPosition.x,currentPosition.y);
 
@@ -60,6 +60,18 @@ var logoCtrller=function($scope,commandRetrieval) {
 		}
 	}
 
+	var evaluateRtStatement = function(words) {
+		if (words.length != 2) {
+			throwParseError("extra tokens in FD statement");
+		} else if (words[1].search(/^\d+$/) != 0) {
+			throwParseError("rt show have a number as argument and not "+words[i]);
+		} else {
+			return {
+				rt: (1*words[1]) 
+			}
+		}
+	}
+
 	var evaluateStatement=function(statement) {
 		var words=statement.split(" ");
 		console.log("to evaluated statement composed of "+words);
@@ -69,6 +81,9 @@ var logoCtrller=function($scope,commandRetrieval) {
 			if (command.search(/^fd$/i) == 0) {
 				console.log("to evaluate fd statement")
 				evaluatedStatement=evaluateFdStatement(words);
+			} else if (command.search(/^rt$/i) == 0) {
+				console.log("to evaluate rt statement")
+				evaluatedStatement=evaluateRtStatement(words);
 			} else {
 				throwParseError("unknown statement: "+command);
 			}
@@ -78,16 +93,35 @@ var logoCtrller=function($scope,commandRetrieval) {
 		return evaluatedStatement;
 	}
 
+	function drawFd(length) {
+		var currentPoint=Geometry.makePoint(currentPosition.x,currentPosition.y);
+		var newPoint=Geometry.rotate(currentPoint,length,currentPosition.angle);
+
+		Geometry.drawLine(ctx,currentPoint.x,currentPoint.y,newPoint.x,newPoint.y);
+
+		currentPosition.x=newPoint.x;
+		currentPosition.y=newPoint.y;
+	}
+
+	function drawRt(angle) {
+		currentPosition.angle=Math.radians(angle);
+	}
+
 	var draw=function(evaluatedCommands) {
 		console.log("to evaluate");
 		for (var cmdIdx in evaluatedCommands) {
 			var currentCommand=evaluatedCommands[cmdIdx];
 			if (currentCommand.fd) {
-				console.log("drawing fd");
+				console.log("drawing fd "+currentCommand.fd);
+				drawFd(currentCommand.fd);
+			} else if (currentCommand.rt) {
+				drawRt(currentCommand.rt);
 			}
 		}
+
 		var pos=Geometry.makePoint(currentPosition.x,currentPosition.y);
 		Geometry.drawTriangle(ctx,pos,currentPosition.angle);
+		console.log("current position: "+currentPosition);
 	}
 
 	var notifyOnExecution = function(success,message) {
@@ -117,7 +151,13 @@ var logoCtrller=function($scope,commandRetrieval) {
 			draw(evaluatedCommands);
 			notifyOnExecution(true,"commands evaluated successfully!");
 		} catch (e) {
-			notifyOnExecution(false,e);	
+			var message;
+			if (e.message) {
+				message=e.message;
+			} else {
+				message=e;
+			}
+			notifyOnExecution(false,message);	
 		}
 	}
 };
