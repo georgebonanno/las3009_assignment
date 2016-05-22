@@ -86,7 +86,8 @@ var logoCtrller=function($scope,commandRetrieval) {
 				console.log("drawing fd");
 			}
 		}
-		drawPosition(currentPosition.x,currentPosition.y);
+		var pos=Geometry.makePoint(currentPosition.x,currentPosition.y);
+		Geometry.drawTriangle(ctx,pos,currentPosition.angle);
 	}
 
 	var notifyOnExecution = function(success,message) {
