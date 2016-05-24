@@ -6,12 +6,25 @@ var logoCtrller=function($scope,commandRetrieval) {
 
 	var canvas=document.getElementById('logoCanvas');
 	var ctx=canvas.getContext('2d');
+
 	var currentPosition={
-		angle: 0,
-		x: canvas.width/2,
-		y: canvas.height/2 
+			angle: 0,
+			x: canvas.width/2,
+			y: canvas.height/2 
+		};
+
+	function init() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		currentPosition.angle=0;
+		currentPosition.x=canvas.width/2;
+		currentPosition.y=canvas.height/2;
 	}
-	//ctx.moveTo(currentPosition.x,currentPosition.y);
+
+	logoCtrl.clear=function() {
+		init();
+	}
+
+	init();
 
 	commandRetrieval.loadCommands()
 		.then(function(response) {
@@ -55,7 +68,7 @@ var logoCtrller=function($scope,commandRetrieval) {
 			throwParseError("fd show have a number as argument and not "+words[i]);
 		} else {
 			return {
-				fd: (1*words[1]) 
+				fd: (1*words[1])	 
 			}
 		}
 	}
@@ -104,7 +117,7 @@ var logoCtrller=function($scope,commandRetrieval) {
 	}
 
 	function drawRt(angle) {
-		currentPosition.angle=Math.radians(angle);
+		currentPosition.angle+=Math.radians(angle);
 	}
 
 	var draw=function(evaluatedCommands) {

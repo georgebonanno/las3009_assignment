@@ -24,10 +24,26 @@ module.exports = function(grunt){
       server: {
         options: {
           port:1234,
-          base:'.'
+          base:'.',
+          middleware: function(connect, options, middlewares){
+            middlewares.unshift(function(req,res,next) {
+              if (req.url.indexOf("v1") > 0) {
+                  grunt.log.write("Req: " + req.url);
+                  var buffer = grunt.file.read('./index.html', {
+                      encoding: 'utf-8'
+                  });
+                  res.writeHead(200);
+                  res.write(buffer);
+                  res.end();
+              } else {
+                  next();
+              }
+            });
+            return middlewares;   
         }
-      }
+     }
     }
+  }
   });
 
   grunt.registerTask('serve', ['connect:server','watch']);

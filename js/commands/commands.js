@@ -7,35 +7,37 @@ function onError(errorResponse) {
 
 var app=angular.module('CommandModule', ['ngRoute']);
 
-app.config(['$routeProvider',
-  function($routeProvider) {
+app.config(['$routeProvider','$locationProvider',
+  function($routeProvider,$locationProvider) {
     $routeProvider.
-      when('/commands', {
+      when('/v1/commands', {
         templateUrl: 'backoffice/backoffice.html',
         controller: 'CommandController', 
         controllerAs: 'vm'
       }).
-      when('/edit/:commandName', {
+      when('/v1/edit/:commandName', {
         templateUrl: 'backoffice/editCommands.html',
         controller: 'EditController', 
         controllerAs: 'vm'
       }).
-      when('/edit', {
+      when('/v1/edit', {
         templateUrl: 'backoffice/editCommands.html',
         controller: 'EditController', 
         controllerAs: 'vm'
       }).
-      when('/logo', {
+      when('/v1/logo', {
         templateUrl: 'public/logoSimulator.html',
         controller: 'LogoController', 
         controllerAs: 'logo'
       }).
-      when('/', {
+      when('/v1/', {
         templateUrl: 'login/login.html'
       }).
       otherwise({
-        redirectTo: '/commands'
+        redirectTo: '/v1/commands'
       });
+
+      $locationProvider.html5Mode(true);
   }]);
 
 
