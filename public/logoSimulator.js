@@ -5,12 +5,14 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 	logoCtrl.currentCommands="";
 
 	var canvas=document.getElementById('logoCanvas');
-	var ctx=canvas.getContext('2d');
+	var ctx=canvas ? canvas.getContext('2d') : null;
+
+	logoCtrl.coms={};
 
 	var currentPosition={
 			angle: 0,
-			x: canvas.width/2,
-			y: canvas.height/2,
+			x: 0,
+			y: 0,
 			pd: true
 		};
 
@@ -26,7 +28,7 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 		init();
 	}
 
-	init();
+	//init();
 
 	commandRetrieval.loadCommands()
 		.then(function(response) {
@@ -121,7 +123,8 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 
 			var inputtedCommands=logoCtrl.currentCommands;
 			var evaluatedCommands=commandParsing.parseCommands(inputtedCommands);	
-			draw(evaluatedCommands);
+			logoCtrl.coms=evaluatedCommands;
+			//draw(evaluatedCommands);
 			notifyOnExecution(true,"commands evaluated successfully!");
 		} catch (e) {
 			var message;

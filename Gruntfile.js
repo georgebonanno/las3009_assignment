@@ -39,7 +39,7 @@ module.exports = function(grunt){
                   next();
               }
             });
-            return middlewares;   
+            return middlewares;     
         }
      }
     }
