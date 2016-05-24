@@ -10,7 +10,8 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 	var currentPosition={
 			angle: 0,
 			x: canvas.width/2,
-			y: canvas.height/2 
+			y: canvas.height/2,
+			pd: true;
 		};
 
 	function init() {
@@ -18,6 +19,7 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 		currentPosition.angle=0;
 		currentPosition.x=canvas.width/2;
 		currentPosition.y=canvas.height/2;
+		currentPosition.pd=true;
 	}
 
 	logoCtrl.clear=function() {
@@ -69,8 +71,18 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 		currentPosition.y=newPoint.y;
 	}
 
+	function drawLt(angle) {
+		currentPosition.angle+=-1*Math.radians(angle);
+	}
+
 	function drawRt(angle) {
 		currentPosition.angle+=Math.radians(angle);
+	}
+
+	function drawPenUpOrDown(penUpOrDown) {
+		if (penUpOrDown) {
+			currentPosition.pd = (penUpOrDown.search(/^pd$/i) == 0);
+		}
 	}
 
 	var draw=function(evaluatedCommands) {
@@ -82,6 +94,10 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 				drawFd(currentCommand.fd);
 			} else if (currentCommand.rt) {
 				drawRt(currentCommand.rt);
+			} else if (currentCommand.lt) {
+				drawLt(currentCommand.lt);
+			} else if (currentCommand.penDownOrUp) {
+				drawPenUpOrDown(currentCommand.penDownOrUp);
 			}
 		}
 
