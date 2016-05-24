@@ -11,7 +11,7 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 			angle: 0,
 			x: canvas.width/2,
 			y: canvas.height/2,
-			pd: true;
+			pd: true
 		};
 
 	function init() {
@@ -65,8 +65,9 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 		var currentPoint=Geometry.makePoint(currentPosition.x,currentPosition.y);
 		var newPoint=Geometry.rotate(currentPoint,length,currentPosition.angle);
 
-		Geometry.drawLine(ctx,currentPoint.x,currentPoint.y,newPoint.x,newPoint.y);
-
+		if (currentPosition.pd) {
+			Geometry.drawLine(ctx,currentPoint.x,currentPoint.y,newPoint.x,newPoint.y);
+		}
 		currentPosition.x=newPoint.x;
 		currentPosition.y=newPoint.y;
 	}
