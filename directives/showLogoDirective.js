@@ -1,4 +1,4 @@
-app.directive('showLogo',function() {
+app.directive('showLogo',['commandParsingService',function(commandParsingService) {
 
 	var controller = function() {
 
@@ -98,25 +98,12 @@ app.directive('showLogo',function() {
 			var logoDrawing = new LogoDrawing(scope.canvas);
 	        
             scope.$watch("todraw", function(drawCommands) {
-            	if (drawCommands.search(/^\[.*\]$/) == 0) {
-            		var commandsStr=drawCommands.substring(1,drawCommands.length-1);
-            		var commands=commandsStr.split(",");
+            	console.log("command to evaluate by logo directive: "+drawCommands);
+            	var parsedCommands=commandParsingService.parseCommands(drawCommands);
 
-            		var actualCommands = [];
-            		for (var i in commands) {
-            			actualCommands.push(JSON.parse(commands[i]));
-            		}
-            		console.log("commands = "+commands);
-        			logoDrawing.draw(actualCommands);
-            	} else if (typeof drawCommands === 'Array') {
-            		drawCommands.forEach(function(v) {
-            			console.log("element : "+v+" and logoDrawing = "+drawCommands);
-            		})
-            	} else {
-            		console.log("element is "+drawCommands);
-            	}
+    			logoDrawing.draw(parsedCommands);
             });
         }
 
 	};
-});
+}]);

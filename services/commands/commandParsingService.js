@@ -1,4 +1,4 @@
-app.service('commandParsing',function() {
+app.service('commandParsingService',function() {
 	
 	var throwParseError=function(message) {
 		throw new Error("parse error: "+message);

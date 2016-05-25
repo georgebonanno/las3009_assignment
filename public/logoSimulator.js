@@ -1,5 +1,5 @@
 var app=angular.module('CommandModule');
-var logoCtrller=function($scope,commandRetrieval,commandParsing) {
+var logoCtrller=function($scope,commandRetrieval) {
 
 	var logoCtrl=this;
 	logoCtrl.currentCommands="";
@@ -66,8 +66,7 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 		try {
 
 			var inputtedCommands=logoCtrl.currentCommands;
-			var evaluatedCommands=commandParsing.parseCommands(inputtedCommands);	
-			logoCtrl.coms=evaluatedCommands;
+			logoCtrl.coms=logoCtrl.currentCommands;
 			//draw(evaluatedCommands);
 			notifyOnExecution(true,"commands evaluated successfully!");
 		} catch (e) {
@@ -83,4 +82,4 @@ var logoCtrller=function($scope,commandRetrieval,commandParsing) {
 	}
 };
 app.controller('LogoController',
-				['$scope','commandRetrieval','commandParsing',logoCtrller]);
+				['$scope','commandRetrieval',logoCtrller]);
