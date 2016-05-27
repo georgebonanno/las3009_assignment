@@ -11,7 +11,7 @@ app.directive('showLogo',['commandParsingService',function(commandParsingService
 		restrict: 'E',
 		templateUrl: 'directives/show-logo.html',
 		scope: {
-			todraw: '@todraw',
+			todraw: '=',
 			onSuccess: '&',
 			onError: '&',
 			clearPrevious: '&'
@@ -23,21 +23,32 @@ app.directive('showLogo',['commandParsingService',function(commandParsingService
 			var onSuccessHandler=scope.onSuccess;
 			var logoDrawing = new LogoDrawing(scope.canvas);
 			var clearPrevious = scope.clearPrevious;
-	        
+
+			var sc = scope;
+
+	        var flag=false;
             scope.$watch("todraw", function(drawCommands) {
             	try {
-	            	console.log("command to evaluate by logo directive: "+drawCommands);
-	            	var parsedCommands=commandParsingService.parseCommands(drawCommands);
+            		if (!flag || drawCommands != "") {
+		            	console.log("command to evaluate by logo directive: "+drawCommands);
+		            	var parsedCommands=commandParsingService.parseCommands(drawCommands);
 
-	            	//only the 'turtle' (actually the triangle is drawn) is
-	            	//there are no commands;
-	            	var clearPreviousDrawing=clearPrevious();
-	    			logoDrawing.draw(clearPreviousDrawing,parsedCommands);
+		            	//only the 'turtle' (actually the triangle is drawn) is
+		            	//there are no commands;
+		            	var clearPreviousDrawing=clearPrevious();
+		    			logoDrawing.draw(clearPreviousDrawing,parsedCommands);
 
-	    			if (drawCommands) {
-	    				//call the success  handler if any commands were evaluated
-	    				onSuccessHandler();
+		    			if (drawCommands) {
+		    				//call the success  handler if any commands were evaluated
+		    				onSuccessHandler();
+		    			}
+
+		    			sc.todraw="";
+		    			flag = true;
+	    			} else {
+	    				flag = false;
 	    			}
+
 
     			} catch (e) {
     				var errorMessage;

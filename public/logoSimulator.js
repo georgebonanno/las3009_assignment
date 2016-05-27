@@ -7,7 +7,7 @@ var logoCtrller=function($scope,commandRetrieval) {
 	var canvas=document.getElementById('logoCanvas');
 	var ctx=canvas ? canvas.getContext('2d') : null;
 
-	logoCtrl.coms="";
+	logoCtrl.drawCommands="";
 
 	logoCtrl.clearPreviousDrawing=false;
 
@@ -29,7 +29,7 @@ var logoCtrller=function($scope,commandRetrieval) {
 
 	function clearParts(clearCanvas,clearCommands) {
 		if (clearCanvas) {
-			logoCtrl.coms="";
+			logoCtrl.drawCommands=" ";
 			logoCtrl.clearPreviousDrawing=true;
 		}
 		if (clearCommands) {
@@ -83,23 +83,17 @@ var logoCtrller=function($scope,commandRetrieval) {
 		logoCtrl.execOutcomeMessage=message;
 	}
 
-	logoCtrl.evaluate=function (){
-		try {
-
-			logoCtrl.clearPreviousDrawing=false;
-			var inputtedCommands=logoCtrl.currentCommands;
-			logoCtrl.coms=logoCtrl.currentCommands;
-		} catch (e) {
-			var message;
-			if (e.message) {
-				message=e.message;
-				console.log(e.stack);
-			} else {
-				message=e;
-			}
-		}
+	logoCtrl.run=function (){
+		logoCtrl.clearPreviousDrawing=false;
+		var inputtedCommands=logoCtrl.currentCommands;
+		logoCtrl.drawCommands=logoCtrl.currentCommands;
 	};
 
+	logoCtrl.clearAndRun=function() {
+		logoCtrl.clearDrawing();
+		var inputtedCommands=logoCtrl.currentCommands;
+		logoCtrl.drawCommands=logoCtrl.currentCommands;
+	}
 
 
 	logoCtrl.onEvalError=function(errorMessage) {
