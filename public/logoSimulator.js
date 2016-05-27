@@ -9,6 +9,8 @@ var logoCtrller=function($scope,commandRetrieval) {
 
 	logoCtrl.coms="";
 
+	logoCtrl.clearPreviousDrawing=false;
+
 	var currentPosition={
 			angle: 0,
 			x: 0,
@@ -24,8 +26,27 @@ var logoCtrller=function($scope,commandRetrieval) {
 		currentPosition.pd=true;
 	}
 
+
+	function clearParts(clearCanvas,clearCommands) {
+		if (clearCanvas) {
+			logoCtrl.coms="";
+			logoCtrl.clearPreviousDrawing=true;
+		}
+		if (clearCommands) {
+			logoCtrl.currentCommands = "";
+		}
+	}
+
 	logoCtrl.clear=function() {
-		init();
+		clearParts(true,true);
+	}
+
+	logoCtrl.clearDrawing=function() {
+		clearParts(true,false);
+	}
+
+	logoCtrl.clearCommands=function() {
+		clearParts(false,true);
 	}
 
 	//init();
@@ -65,6 +86,7 @@ var logoCtrller=function($scope,commandRetrieval) {
 	logoCtrl.evaluate=function (){
 		try {
 
+			logoCtrl.clearPreviousDrawing=false;
 			var inputtedCommands=logoCtrl.currentCommands;
 			logoCtrl.coms=logoCtrl.currentCommands;
 		} catch (e) {
@@ -88,6 +110,10 @@ var logoCtrller=function($scope,commandRetrieval) {
 	logoCtrl.onEvalSuccess=function() {
 		console.log("commands evaluated successfully!");
 		notifyOnExecution(true,"commands evaluated successfully!");
+	}
+
+	logoCtrl.shouldClearPrevious =function() {
+		return logoCtrl.clearPreviousDrawing;
 	}
 }; 
 app.controller('LogoController',

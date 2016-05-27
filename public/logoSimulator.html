@@ -30,6 +30,7 @@
           </p> 
               <show-logo todraw="{{logo.coms}}" 
                          on-error="logo.onEvalError(errorMessage)"
+                         clear-previous="logo.shouldClearPrevious()"
                          on-success="logo.onEvalSuccess()">
               </show-logo>
             
@@ -58,9 +59,17 @@
             <div class="col-md-2">
               <div class="btn-group-vertical" style="width:90%">
                 <button type="button" class="btn btn-primary"
-                        ng-click="logo.evaluate()">run</button>
+                        ng-click="logo.evaluate()">run
+                </button>
                 <button type="button" class="btn btn-primary"
-                        ng-click="logo.clear()">clear</button>
+                        ng-click="logo.clearDrawing()">clear drawing only
+                </button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="logo.clearCommands()">clear commands only
+                </button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="logo.clear()">clear all
+                </button>
               </div>
             </div>
         </div>

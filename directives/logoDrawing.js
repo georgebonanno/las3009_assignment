@@ -2,6 +2,8 @@ function LogoDrawing(canvas) {
 
 	var ctx = canvas.getContext('2d');
 
+	var commandSoFar=[];
+
 	function drawPosition(x,y) {
 		ctx.fillStyle = "#000000";
 		ctx.arc(x,y,5,0,2*Math.PI,false);
@@ -50,10 +52,16 @@ function LogoDrawing(canvas) {
 		}
 	}
 
-	var draw=function(evaluatedCommands) {
+	var draw=function(clearPrevious,evaluatedCommands) {
 		console.log("to evaluate");
-		for (var cmdIdx in evaluatedCommands) {
-			var currentCommand=evaluatedCommands[cmdIdx];
+		init();
+		if (clearPrevious) {
+			console.log("clearing previous commands");
+			commandSoFar.length=0;
+		} 
+		commandSoFar=commandSoFar.concat(evaluatedCommands);
+		for (var cmdIdx in commandSoFar) {
+			var currentCommand=commandSoFar[cmdIdx];
 			if (currentCommand.fd) {
 				console.log("drawing fd "+currentCommand.fd);
 				drawFd(currentCommand.fd);

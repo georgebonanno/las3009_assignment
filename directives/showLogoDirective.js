@@ -13,7 +13,8 @@ app.directive('showLogo',['commandParsingService',function(commandParsingService
 		scope: {
 			todraw: '@todraw',
 			onSuccess: '&',
-			onError: '&'
+			onError: '&',
+			clearPrevious: '&'
 		},
 		link: function(scope, element, attrs) {
             
@@ -21,6 +22,7 @@ app.directive('showLogo',['commandParsingService',function(commandParsingService
 			var errorHandler=scope.onError;
 			var onSuccessHandler=scope.onSuccess;
 			var logoDrawing = new LogoDrawing(scope.canvas);
+			var clearPrevious = scope.clearPrevious;
 	        
             scope.$watch("todraw", function(drawCommands) {
             	try {
@@ -29,7 +31,8 @@ app.directive('showLogo',['commandParsingService',function(commandParsingService
 
 	            	//only the 'turtle' (actually the triangle is drawn) is
 	            	//there are no commands;
-	    			logoDrawing.draw(parsedCommands);
+	            	var clearPreviousDrawing=clearPrevious();
+	    			logoDrawing.draw(clearPreviousDrawing,parsedCommands);
 
 	    			if (drawCommands) {
 	    				//call the success  handler if any commands were evaluated
