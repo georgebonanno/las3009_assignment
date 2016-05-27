@@ -5,10 +5,13 @@ function onError(errorResponse) {
   alert("failed to recieve response");
 }
 
+console.log("setting up route module");
 var app=angular.module('CommandModule', ['ngRoute']);
+console.log("route module set up");
 
 app.config(['$routeProvider','$locationProvider',
   function($routeProvider,$locationProvider) {
+    console.log("configuring....");
     $routeProvider.
       when('/v1/commands', {
         templateUrl: 'backoffice/backoffice.html',
@@ -30,11 +33,13 @@ app.config(['$routeProvider','$locationProvider',
         controller: 'LogoController', 
         controllerAs: 'logo'
       }).
-      when('/v1/', {
-        templateUrl: 'login/login.html'
+      when('/v1', {
+        templateUrl: 'login/login.html',
+        controller: 'LoginController', 
+        controllerAs: 'login'
       }).
       otherwise({
-        redirectTo: '/v1/commands'
+        redirectTo: '/v1'
       });
 
       $locationProvider.html5Mode(true);

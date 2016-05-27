@@ -38,7 +38,7 @@ app.controller('EditController', ['$scope', '$http', '$location','commandRetriev
                 alert('command '+that.input.id+' successfully added');
               }
               that.input={};
-              $location.path("/#/commands");
+              $location.path("/v1/commands");
             }
           },
           function(errorResponse){
