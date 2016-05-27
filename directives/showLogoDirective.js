@@ -27,9 +27,14 @@ app.directive('showLogo',['commandParsingService',function(commandParsingService
 	            	console.log("command to evaluate by logo directive: "+drawCommands);
 	            	var parsedCommands=commandParsingService.parseCommands(drawCommands);
 
+	            	//only the 'turtle' (actually the triangle is drawn) is
+	            	//there are no commands;
 	    			logoDrawing.draw(parsedCommands);
 
-	    			onSuccessHandler();
+	    			if (drawCommands) {
+	    				//call the success  handler if any commands were evaluated
+	    				onSuccessHandler();
+	    			}
 
     			} catch (e) {
     				var errorMessage;
