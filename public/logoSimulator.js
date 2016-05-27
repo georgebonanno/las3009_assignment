@@ -7,7 +7,7 @@ var logoCtrller=function($scope,commandRetrieval) {
 	var canvas=document.getElementById('logoCanvas');
 	var ctx=canvas ? canvas.getContext('2d') : null;
 
-	logoCtrl.coms={};
+	logoCtrl.coms="";
 
 	var currentPosition={
 			angle: 0,
@@ -67,8 +67,6 @@ var logoCtrller=function($scope,commandRetrieval) {
 
 			var inputtedCommands=logoCtrl.currentCommands;
 			logoCtrl.coms=logoCtrl.currentCommands;
-			//draw(evaluatedCommands);
-			notifyOnExecution(true,"commands evaluated successfully!");
 		} catch (e) {
 			var message;
 			if (e.message) {
@@ -77,9 +75,20 @@ var logoCtrller=function($scope,commandRetrieval) {
 			} else {
 				message=e;
 			}
-			notifyOnExecution(false,message);	
 		}
+	};
+
+
+
+	logoCtrl.onEvalError=function(errorMessage) {
+		console.log("an error occured during execution: "+errorMessage);
+		notifyOnExecution(false,errorMessage);	
 	}
-};
+
+	logoCtrl.onEvalSuccess=function() {
+		console.log("commands evaluated successfully!");
+		notifyOnExecution(true,"commands evaluated successfully!");
+	}
+}; 
 app.controller('LogoController',
 				['$scope','commandRetrieval',logoCtrller]);

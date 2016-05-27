@@ -28,7 +28,10 @@
         <div class="col-md-9">
         <div class="jumbotron" style="max-height:20;overflow-y: scroll;">
           </p> 
-              <show-logo todraw="{{logo.coms}}"></show-logo>
+              <show-logo todraw="{{logo.coms}}" 
+                         on-error="logo.onEvalError(errorMessage)"
+                         on-success="logo.onEvalSuccess()">
+              </show-logo>
             
         </div>
       </div>
