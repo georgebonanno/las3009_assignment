@@ -6,7 +6,7 @@ function onError(errorResponse) {
 }
 
 console.log("setting up route module");
-var app=angular.module('CommandModule', ['ngRoute']);
+var app=angular.module('CommandModule', ['ngRoute','json-server-auth', 'json-server-users']);
 console.log("route module set up");
 
 app.config(['$routeProvider','$locationProvider',
