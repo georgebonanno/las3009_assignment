@@ -29,6 +29,10 @@
     {
       "username":"george",
       "password": "gbon0001"
+    },
+    {
+      "username":"admin1",
+      "password": "passadmin1"
     }
   ]
 }

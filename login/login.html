@@ -1,18 +1,28 @@
-<div>
-    <h1>Logo Simulator Login Page</h1>
+<div class="container">
 
-    <div>
-        <form novalidate>
-        <div>
-           username: <input ng-model="login.name" type="text"/>            
-        </div>
-        <div>
-           password: <input ng-model="login.password" type="password"/>
-        </div>
-        </div>
-            <input type="submit" ng-click="login.login()" value="login"/>
+    <div style="text-align: center;">
+        <form class="form-signin text-center">
+            <h2 class="form-signin-heading">Logo Simulator Login Page</h2>
+            
+            <div style="width:25%; display:block; margin: 0 auto;">
+                <div class="text-center">
+                   <label class="sr-only" for="loginName">Name</label> 
+                   <input id="loginName" class="form-control" ng-model="login.name" type="text"/>            
+                </div>
+                <div>
+                   <label class="sr-only" for="password">Password</label> 
+                   <input class="form-control" id="password" ng-model="login.password" type="password"/>
+                </div>
+                <div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" 
+                            ng-click="login.login()">
+                            log in
+                    </button>
+                </div>
+                <div class="alert {{login.alertClass}}" ng-show="{{login.message != null}}">
+                    <strong>{{login.message}}</strong> 
+                </div>
+            </div>
         </form>
     </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
 </div>

@@ -1,25 +1,36 @@
 
 var loginController = function ($scope, $http,commandRetrieval,
+								$location,
 							    AuthenticationService) {
 
 	var loginCtrl=this;
 
 	loginCtrl.name="";
 	loginCtrl.password="";
+	loginCtrl.message="";
+	loginCtrl.alertClass="";
 
 	loginCtrl.login=function() {
 
 		console.log("attempting to log in with: "+loginCtrl.name);
+		loginCtrl.message="";
+		loginCtrl.alertClass="";
 
 		var username=loginCtrl.name;
 		var password=loginCtrl.password;
 		AuthenticationService.Login(username, password).then(function(){
 
 			console.log("logged in with user "+username);
+			$location.path('/v1/commands');
 
 
 		}, function(errormessage) {
-			console.log("failed to log in with error: "+errormessage);
+			loginCtrl.message="login failed";
+			loginCtrl.alertClass="alert-warning";
+			console.log("failed to log in with error: "+
+						 errormessage ? (errormessage.length && errormessage.length > 0 ?
+						 					errormessage[0] : "<empty array>" )
+						 				: errormessage);
 		})
 	}
 
@@ -29,7 +40,7 @@ var loginController = function ($scope, $http,commandRetrieval,
 
 angular.module('CommandModule')
 	   .controller('LoginController', 
-			   ['$scope', '$http', 'commandRetrieval',
+			   ['$scope', '$http', 'commandRetrieval','$location',
 			    'AuthenticationService',
 			   	loginController]); 
 
