@@ -1,37 +1,29 @@
 {
   "commands": [
     {
-      "id": "pu",
-      "commandDescription": "pen up...."
+      "id": "fd(steps)",
+      "commandDescription": "fd (forward) moves the 'turtle' pointer a number of steps ahead."
     },
     {
-      "id": "repeat",
-      "commandDescription": "repeats for a number of times (qisu..);l;l;l, zidt ftit iehor yam yam"
+      "id": "lt(angle in degrees)",
+      "commandDescription": "lt (left) turns the turtle anti-clockwise by the given number of degrees."
     },
     {
-      "id": "test2",
-      "commandDescription": "e per quanto mi parlavi, per i toui diffeti seri, per la voglia di vivere e di sdramatizzare."
+      "id": "repeat[n,statement1; statement2;...];",
+      "commandDescription": "repeats statement1, statement2,....statementx for n times."
     },
     {
-      "id": "ohra",
-      "commandDescription": "hehe! k;ljnkj kjlkjn .ln.kmn.km"
-    },
-    {
-      "id": "zida",
-      "commandDescription": "ha nzidu ohra"
-    },
-    {
-      "id": ".,mn.,m",
-      "commandDescription": ".,n.lk"
+      "id": "commandX",
+      "commandDescription": "this command will be available in logo evaluator's next release :)"
     }
   ],
   "users": [
     {
-      "username":"george",
+      "username": "george",
       "password": "gbon0001"
     },
     {
-      "username":"admin1",
+      "username": "admin1",
       "password": "passadmin1"
     }
   ]

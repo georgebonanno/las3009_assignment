@@ -27,7 +27,7 @@ module.exports = function(grunt){
           base:'.',
           middleware: function(connect, options, middlewares){
             middlewares.unshift(function(req,res,next) {
-              if (req.url.indexOf("v1") > 0) {
+              if (req.url.indexOf("evalLogo") > 0) {
                   grunt.log.write("Req: " + req.url);
                   var buffer = grunt.file.read('./index.html', {
                       encoding: 'utf-8'

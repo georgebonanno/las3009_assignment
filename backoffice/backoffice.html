@@ -31,7 +31,7 @@
 				<tbody>
 					<tr ng-repeat="command in vm.commands">
 						<td>
-							<a href="v1/edit/{{command.id}}" ng-click="vm.selectCommand(command)">{{command.id}}</a>
+							<a href="evalLogo/edit/{{command.id}}" ng-click="vm.selectCommand(command)">{{command.id}}</a>
 						</td>
 						<td>{{command.commandDescription}}</td>
 						<td>
@@ -45,7 +45,7 @@
 		</div>
 	</div>
 	<div class="btn-group">
-   		<a href="v1/edit"
+   		<a href="evalLogo/edit"
 		   ng-show="!vm.showNewCommand"
 		   class="btn btn-primary" 
 		   ng-click="vm.newCommand()">New Command
