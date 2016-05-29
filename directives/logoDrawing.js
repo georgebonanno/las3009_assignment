@@ -52,16 +52,19 @@ function LogoDrawing(canvas) {
 		}
 	}
 
-	var draw=function(clearPrevious,evaluatedCommands) {
-		console.log("to evaluate");
-		init();
-		if (clearPrevious) {
-			console.log("clearing previous commands");
-			commandSoFar.length=0;
-		} 
-		commandSoFar=commandSoFar.concat(evaluatedCommands);
-		for (var cmdIdx in commandSoFar) {
-			var currentCommand=commandSoFar[cmdIdx];
+	function drawRepeat(repeatCommand) {
+		var reps=repeatCommand.reps;
+		var commandsToRep=repeatCommand.commandsToRep;
+
+		for(var cnt=0; cnt<reps; cnt++) {
+			drawWithCommands(commandsToRep);
+		}
+	}
+
+	var drawWithCommands=function(evaluatedCommands) {
+		
+		for (var cmdIdx in evaluatedCommands) {
+			var currentCommand=evaluatedCommands[cmdIdx];
 			if (currentCommand.fd) {
 				console.log("drawing fd "+currentCommand.fd);
 				drawFd(currentCommand.fd);
@@ -71,11 +74,25 @@ function LogoDrawing(canvas) {
 				drawLt(currentCommand.lt);
 			} else if (currentCommand.penDownOrUp) {
 				drawPenUpOrDown(currentCommand.penDownOrUp);
+			} else if (currentCommand.repeat) {
+				drawRepeat(currentCommand.repeat);
 			}
 		}
 
-		var pos=Geometry.makePoint(currentPosition.x,currentPosition.y);
-		Geometry.drawTriangle(ctx,pos,currentPosition.angle);
+		var currentPos=Geometry.makePoint(currentPosition.x,currentPosition.y);
+		return currentPos;
+	}
+
+	var draw=function(clearPrevious,evaluatedCommands) {
+		console.log("to evaluate");
+		init();
+		if (clearPrevious) {
+			console.log("clearing previous commands");
+			commandSoFar.length=0;
+		} 
+		commandSoFar=commandSoFar.concat(evaluatedCommands);		
+		var currentPos=drawWithCommands(commandSoFar);
+		Geometry.drawTriangle(ctx,currentPos,currentPosition.angle);
 		console.log("current position: "+currentPosition);
 	}
 

@@ -98,22 +98,39 @@ function LogoCommandParser(commands) {
 	function parseRepeat(inputtedCommands,commandPattern,
 						 matchedCommand) {
 		console.log("parsing repeat");
+		//repeat number is found in regex capture group 3
+		var repeatNumber=matchedCommand[3];
+		console.log("number of repetitions: "+repeatNumber);
 		var repeatBlockStruct=parseCommands(inputtedCommands,commandPattern,true);
 		return {
 			repeat: {
-				times: -1,
-				blockToRep: repeatBlockStruct
+				reps: 1*repeatNumber,
+				commandsToRep: repeatBlockStruct
 			}
 		};
 	}
 
+	function skipLineSeparator(inputtedCommands,lastIndex) {
+		var lineSep=/\s*[;\n]\s*/g;
+		lineSep.lastIndex=lastIndex;
+		var seperator=(lineSep.exec(inputtedCommands));
+		var lastIndex;
+		if (seperator) {
+			lastIndex=seperator.lastIndex;
+		} else {
+			throw new Error("statement seperator expected at index "+lastIndex);
+		}
+		return lineSep.lastIndex;
+	}
+
 	function parseCommands(inputtedCommands,
 						  commandPattern,parsingForRepeat) {
-		//var commandPattern=/repeat\[][a-z]+\(\d+\)\s*[\n;]\s*/ig;
 		parsingForRepeat = parsingForRepeat ? parsingForRepeat : false;
 		if (!commandPattern) {
+			//first call to parse commands
 			commandPattern =
 				/\s*((repeat\[(\d+),)|(([a-z]+)\((\d+)\))\s*[\n;]\s*)/ig;
+			previousLastIndex = -1;
 		}
 		var matchedCommand;
 		var matched;
@@ -137,7 +154,7 @@ function LogoCommandParser(commands) {
 			if (matchedCommand && matchedCommand.match(/^repeat\[/)) {
 				previousLastIndex=commandPattern.lastIndex;
 				parsedStruct=parseRepeat(inputtedCommands,commandPattern,
-										matchedCommand);
+										matched);
 			} else if (matchedCommand.match(/^repeat\[/)) {
 				console.log("[ matched");
 			}else {
@@ -153,7 +170,8 @@ function LogoCommandParser(commands) {
 			parsedCommands.push(parsedStruct);
 			if (parsingForRepeat && 
 					inputtedCommands[commandPattern.lastIndex] == ']') {
-				commandPattern.lastIndex = commandPattern.lastIndex+1;
+				commandPattern.lastIndex=skipLineSeparator(inputtedCommands,
+															commandPattern.lastIndex+1);
 				keepParsing=false;
 				console.log("found closing repeat!");
 			}
