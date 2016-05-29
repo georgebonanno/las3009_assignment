@@ -135,6 +135,7 @@ function LogoCommandParser(commands) {
 			var matchedCommand=matched[1];
 			var parsedStruct;
 			if (matchedCommand && matchedCommand.match(/^repeat\[/)) {
+				previousLastIndex=commandPattern.lastIndex;
 				parsedStruct=parseRepeat(inputtedCommands,commandPattern,
 										matchedCommand);
 			} else if (matchedCommand.match(/^repeat\[/)) {
