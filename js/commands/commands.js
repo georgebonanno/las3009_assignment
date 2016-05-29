@@ -1,5 +1,3 @@
-var root="http://localhost:3000"
-var commandsRestServiceUrl=root+"/commands";
 
 function onError(errorResponse) {
   alert("failed to recieve response");

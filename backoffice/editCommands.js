@@ -6,23 +6,7 @@ app.controller('EditController', ['$scope', '$http', '$location','commandRetriev
   var editCtrl=this;
   if (!AuthenticationService.isLoggedIn()) {
      $location.path('/v1');
-  } else {
-    editCtrl.userName=AuthenticationService.getCurrentUser();
-  }
-
-	console.log("in edit controller");
-
-  editCtrl.logOut = function() {
-    AuthenticationService.Logout().then(function() {
-      $location.path("/v1/");
-    },
-    function() {
-      alert("failed to logout");
-      //attempt to redirect to login page in case user
-      //want to log in with other user
-      $location.path("/v1/");
-    });
-  }
+  } 
 
 	var command=$routeParams.commandName;
 

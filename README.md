@@ -6,3 +6,10 @@ command examples:
   draw a rectangle: repeat[360,fd(1); rt(1);];
   draw a circle: repeat[360,fd(1); rt(1);];
   draw 3 circles: repeat[3,repeat[360,fd(1); rt(1);];lt(90); fd(40);];
+  draw 2 circles with commands spanning multiple lines: 
+  	lt(180);
+	repeat[360,fd(1); rt(1);];
+	fd(30)
+	lt(90)
+	fd(60);
+	repeat[360,fd(1); rt(1);];

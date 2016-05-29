@@ -1,4 +1,4 @@
-app.service('commandRetrieval', function($http) {
+app.service('commandRetrieval', function($http,COMMANDS_ENDPOINT) {
    var findCommand = function(commandId,commandArray) {
       var position=commandArray.findIndex(function(current) {
         return current.id==commandId;
@@ -7,18 +7,18 @@ app.service('commandRetrieval', function($http) {
    }
 
    var retrieveCommand=function(command) {
-      var getCommandUrl=commandsRestServiceUrl+"/"+command;
+      var getCommandUrl=COMMANDS_ENDPOINT+"/"+command;
       return $http.get(getCommandUrl);
    };
 
    var loadCommands=function() {
-      var promise=$http.get(root + '/commands');
+      var promise=$http.get(COMMANDS_ENDPOINT);
 
       return promise;
    };
 
   var saveCommand=function(commandToSave,updateable,exports) {
-      var saveUrl=commandsRestServiceUrl;
+      var saveUrl=COMMANDS_ENDPOINT;
       var saveData= {
             "id": commandToSave.id,
             "commandDescription": commandToSave.commandDescription
@@ -30,7 +30,7 @@ app.service('commandRetrieval', function($http) {
         promise=$http.put(saveUrl,saveData);
       } else {
         console.log("updating command details by raising post request");
-        var getUrl=commandsRestServiceUrl+"/"+commandToSave.id;
+        var getUrl=COMMANDS_ENDPOINT+"/"+commandToSave.id;
         var existCheckPromise=$http.get(getUrl);
         promise=existCheckPromise
                   .then(function(response) {
@@ -65,7 +65,7 @@ app.service('commandRetrieval', function($http) {
         console.log("command with id "+commandId+" removed");
       };
 
-      var deletePromise=$http.delete(root+"/commands/"+commandId);
+      var deletePromise=$http.delete(COMMANDS_ENDPOINT+"/"+commandId);
       deletePromise.then(
         function(response) {
           removeSelectedCommand(commandId,commandList);
