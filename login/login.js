@@ -21,7 +21,7 @@ var loginController = function ($scope, $http,commandRetrieval,
 		AuthenticationService.Login(username, password).then(function(){
 
 			console.log("logged in with user "+username);
-			$location.path('/v1/commands');
+			$location.path('/evalLogo/commands');
 
 
 		}, function(errormessage) {

@@ -6,7 +6,7 @@ app.controller('CommandController', ['$scope', '$http', 'commandRetrieval',
 
    var that=this;
    if (!AuthenticationService.isLoggedIn()) {
-     $location.path('/v1');
+     $location.path('/evalLogo');
    } else {
       var loggedUserDetails=AuthenticationService.getCurrentUser();
 
@@ -19,13 +19,13 @@ app.controller('CommandController', ['$scope', '$http', 'commandRetrieval',
 
     that.logOut = function() {
       AuthenticationService.Logout().then(function() {
-        $location.path("/v1/");
+        $location.path("/evalLogo/");
       },
       function() {
         alert("failed to logout");
         //attempt to redirect to login page in case user
         //want to log in with other user
-        $location.path("/v1/");
+        $location.path("/evalLogo/");
       });
    }
 

@@ -5,7 +5,7 @@ app.controller('EditController', ['$scope', '$http', '$location','commandRetriev
   console.log("activating edit controller...");
   var editCtrl=this;
   if (!AuthenticationService.isLoggedIn()) {
-     $location.path('/v1');
+     $location.path('/evalLogo');
   } 
 
 	var command=$routeParams.commandName;
@@ -39,7 +39,7 @@ app.controller('EditController', ['$scope', '$http', '$location','commandRetriev
                 alert('command '+that.input.id+' successfully added');
               }
               that.input={};
-              $location.path("/v1/commands");
+              $location.path("/evalLogo/commands");
             }
           },
           function(errorResponse){

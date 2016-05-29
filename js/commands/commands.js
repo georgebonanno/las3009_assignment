@@ -11,33 +11,33 @@ app.config(['$routeProvider','$locationProvider',
   function($routeProvider,$locationProvider) {
     console.log("configuring....");
     $routeProvider.
-      when('/v1/commands', {
+      when('/evalLogo/commands', {
         templateUrl: 'backoffice/backoffice.html',
         controller: 'CommandController', 
         controllerAs: 'vm'
       }).
-      when('/v1/edit/:commandName', {
+      when('/evalLogo/edit/:commandName', {
         templateUrl: 'backoffice/editCommands.html',
         controller: 'EditController', 
         controllerAs: 'vm'
       }).
-      when('/v1/edit', {
+      when('/evalLogo/edit', {
         templateUrl: 'backoffice/editCommands.html',
         controller: 'EditController', 
         controllerAs: 'vm'
       }).
-      when('/v1/logo', {
+      when('/evalLogo/logo', {
         templateUrl: 'public/logoSimulator.html',
         controller: 'LogoController', 
         controllerAs: 'logo'
       }).
-      when('/v1', {
+      when('/evalLogo', {
         templateUrl: 'login/login.html',
         controller: 'LoginController', 
         controllerAs: 'login'
       }).
       otherwise({
-        redirectTo: '/v1'
+        redirectTo: '/evalLogo'
       });
 
       $locationProvider.html5Mode(true);
