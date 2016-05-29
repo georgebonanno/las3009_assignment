@@ -1,4 +1,7 @@
 function LogoCommandParser(commands) {
+
+	var previousLastIndex = -1;
+
 	var throwParseError=function(message) {
 		throw new Error("parse error: "+message);
 	}
@@ -92,16 +95,37 @@ function LogoCommandParser(commands) {
 		return evaluatedCommands;
 	}
 
-	function parseCommands(inputtedCommands,commandPattern) {
+	function parseRepeat(inputtedCommands,commandPattern,
+						 matchedCommand) {
+		console.log("parsing repeat");
+		var repeatBlockStruct=parseCommands(inputtedCommands,commandPattern,true);
+		return {
+			repeat: {
+				times: -1,
+				blockToRep: repeatBlockStruct
+			}
+		};
+	}
+
+	function parseCommands(inputtedCommands,
+						  commandPattern,parsingForRepeat) {
 		//var commandPattern=/repeat\[][a-z]+\(\d+\)\s*[\n;]\s*/ig;
+		parsingForRepeat = parsingForRepeat ? parsingForRepeat : false;
 		if (!commandPattern) {
-			commandPattern =/\s*((repeat\[)|(([a-z]+)\((\d+)\))\s*[\n;]\s*)/ig;
+			commandPattern =
+				/\s*((repeat\[(\d+),)|(([a-z]+)\((\d+)\))\s*[\n;]\s*)/ig;
 		}
 		var matchedCommand;
 		var matched;
-		var previousLastIndex=-1;
 		var parsedCommands=[];
-		while(matched=commandPattern.exec(inputtedCommands)) {
+		/*
+			keepParsing indicates to the command searching loop
+			to stop if a repeat statement is being parsed and a ]
+			is found
+		*/
+		var keepParsing=true;
+		while(keepParsing &&
+				(matched=commandPattern.exec(inputtedCommands))) {
 			if ((previousLastIndex == -1 && matched.index != 0) ||
 				(previousLastIndex != -1 &&
 					previousLastIndex != matched.index)) {
@@ -109,22 +133,27 @@ function LogoCommandParser(commands) {
 				throw new Error("unexpected character at position "+atIndex);
 			}
 			var matchedCommand=matched[1];
-
+			var parsedStruct;
 			if (matchedCommand && matchedCommand.match(/^repeat\[/)) {
+				parsedStruct=parseRepeat(inputtedCommands,commandPattern,
+										matchedCommand);
 			} else if (matchedCommand.match(/^repeat\[/)) {
 				console.log("[ matched");
 			}else {
 				//get operand in brackets
-				var command=matched[4]
-				var operand = matched[5];
+				var command=matched[5]
+				var operand = matched[6];
 				console.log("attempting to parsed command "+commandPattern+
 					" with operand "+operand);
 				parsedStruct=evaluateStatement(command,operand);
-				console.log("command parsed: "+JSON.stringify(parsedStruct));
-				parsedCommands.push(parsedStruct);
+
 			}
-			if (inputtedCommands[commandPattern.lastIndex] == ']') {
+			console.log("command parsed: "+JSON.stringify(parsedStruct));
+			parsedCommands.push(parsedStruct);
+			if (parsingForRepeat && 
+					inputtedCommands[commandPattern.lastIndex] == ']') {
 				commandPattern.lastIndex = commandPattern.lastIndex+1;
+				keepParsing=false;
 				console.log("found closing repeat!");
 			}
 			previousLastIndex=commandPattern.lastIndex;
