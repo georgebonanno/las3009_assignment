@@ -129,7 +129,7 @@ function LogoCommandParser(commands) {
 		if (!commandPattern) {
 			//first call to parse commands
 			commandPattern =
-				/\s*((repeat\[(\d+),)|(([a-z]+)\((\d+)\))\s*[\n;]\s*)/ig;
+				/\s*((repeat\[(\d+),)|(([a-z]+)\s*\(\s*(\d+)\s*\))\s*[\n;]\s*)/ig;
 			previousLastIndex = -1;
 		}
 		var matchedCommand;
@@ -176,6 +176,10 @@ function LogoCommandParser(commands) {
 				console.log("found closing repeat!");
 			}
 			previousLastIndex=commandPattern.lastIndex;
+		}
+		if (!matched && inputtedCommands 
+				&& inputtedCommands.length > previousLastIndex) {
+			throw new Error("unknown command at position "+previousLastIndex);
 		}
 
 		return parsedCommands;

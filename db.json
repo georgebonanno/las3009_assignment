@@ -19,12 +19,12 @@
   ],
   "users": [
     {
-      "username": "george",
-      "password": "gbon0001"
+      "username": "george",    
+      "password": "2e7bc33bd9b0f617376c66e88ea1f12112fd0757679da88859027efc"
     },
     {
       "username": "admin1",
-      "password": "passadmin1"
+      "password": "ac9ca6c8e24ac9db7dcf81544a58639ba6cbcda2a4ba180a953355ee"
     }
   ]
 }
