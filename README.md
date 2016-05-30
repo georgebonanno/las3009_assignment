@@ -17,7 +17,7 @@ the backoffice page can be accessed through the following url:
   http://localhost:1234/evalLogo
 
 login names:
-  name: gbon0001
+  name: george
   password: gbon0001
 
   name: admin1
@@ -37,7 +37,7 @@ command examples:
   draw a rectangle: repeat[360,fd(1); rt(1);];
   draw a circle: repeat[360,fd(1); rt(1);];
   draw 3 circles: repeat[3,repeat[360,fd(1); rt(1);];lt(90); fd(40);];
-  draw 2 circles with commands spanning multiple lines: 
+  draw 2 circles with commands spanning multiple lines (i.e. each command is on a separate line): 
   	lt(180);
   	repeat[360,fd(1); rt(1);];
   	fd(30)
