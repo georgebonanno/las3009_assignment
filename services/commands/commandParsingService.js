@@ -4,7 +4,13 @@ app.service('commandParsingService',function() {
 
 	return {
 		parseCommands: function(commandString) {
-			return parser.parseCommands(commandString);
+			var parsedCommands;
+			if (commandString && commandString.trim()) {
+				parsedCommands=parser.parseCommands(commandString);
+			} else {
+				parsedCommands=[];
+			}
+			return parsedCommands;
 		} 
 	}
 
