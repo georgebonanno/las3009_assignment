@@ -1,5 +1,7 @@
 # las3009_assignment
 
+Please view 'evalLogo_an_overview.pdf' for more information on the application's usage.
+
 the following commands need to be run before 
   npm install
   bower install

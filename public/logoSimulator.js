@@ -58,7 +58,7 @@ var logoCtrller=function($scope,commandRetrieval) {
 		function(errorResponse) {
 			alert("alert in retrieving commands");
 		});
-	logoCtrl.selectedCommandDescription="should place description";
+	logoCtrl.selectedCommandDescription="";
 
 	logoCtrl.describe=function(command) {
 		console.log("mouse over "+command);
