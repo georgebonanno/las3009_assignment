@@ -53,13 +53,12 @@ The steps assume that git and node.js are available on the system being run.
 
       http://localhost:1234/evalLogo/logo
 
-    command examples:
+    command examples (please open the file in a text editor to allow the commands to be listed on different lines):
       a. draw a square: repeat[4,fd(40); rt(90); ];
-      b. draw two adjacent squares separated by a line: repeat[4,fd(40); rt(90); ]; c. lt(90); fd(70); repeat[4,fd(40); rt(90); ];
-      d.  draw a rectangle: repeat[360,fd(1); rt(1);];
-      e.  draw a circle: repeat[360,fd(1); rt(1);];
-      f.  draw 3 circles: repeat[3,repeat[360,fd(1); rt(1);];lt(90); fd(40);];
-      g.  draw 2 circles with commands spanning multiple lines (i.e. each command is on a separate line): 
+      b. draw two adjacent squares separated by a line: repeat[4,fd(40); rt(90); ]; lt(90); fd(70); repeat[4,fd(40); rt(90); ];
+      c.  draw a circle: repeat[360,fd(1); rt(1);];
+      d.  draw 3 circles: repeat[3,repeat[360,fd(1); rt(1);];lt(90); fd(40);];
+      e.  draw 2 circles with commands spanning multiple lines (i.e. each command is on a separate line): 
       	lt(180);
       	repeat[360,fd(1); rt(1);];
       	fd(30)
