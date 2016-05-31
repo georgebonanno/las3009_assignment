@@ -16,8 +16,8 @@ The steps assume that git and node.js are available on the system being run.
 
 3.  download all required node and bower dependencies using
 
-      npm install
-      bower install
+      a.  npm install
+      b.  bower install
 
 4.  The server for serving REST requests can be started using
   
