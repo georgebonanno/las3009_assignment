@@ -24,11 +24,14 @@ The steps assume that git and node.js are available on the system being run.
   
       json-server --watch db.json
 
-5.  The following commands should allow the application to be accessed through localhost:1234:
+
+5.  Open another command line shell and change directory to the directory mentioned in step 1. Please execute the rest of the steps in this shell.
+
+6.  The following commands should allow the application to be accessed through localhost:1234:
 
       grunt serve
 
-6.  The backoffice page (see AssignmentBrief.pdf for a description) can be accessed through the following url:
+7.  The backoffice page (see AssignmentBrief.pdf for a description) can be accessed through the following url:
 
       http://localhost:1234/evalLogo
 
@@ -46,7 +49,7 @@ The steps assume that git and node.js are available on the system being run.
 
     bower_components/js-sha256/src/sha256.js
 
-7.  the logo evaluator (public facing application) can be accessed through this url:
+8.  the logo evaluator (public facing application) can be accessed through this url:
 
       http://localhost:1234/evalLogo/logo
 
